@@ -16,7 +16,7 @@ module InstanceVerification
       end
 
       Api::Connect::V3::Systems::ProductsController.class_eval do
-        before_action :verify_base_product_activation, only: %i[activate]
+        before_action :verify_product_activation, only: %i[activate]
         before_action :verify_base_product_upgrade, only: %i[upgrade]
 
         def find_product
@@ -30,9 +30,19 @@ module InstanceVerification
           product
         end
 
-        def verify_base_product_activation
+        def verify_product_activation
           product = find_product
-          return unless product.base?
+
+          unless product.base?
+            return if product.free?
+            base_product = @system.products.where(product_type: :base).first
+            if base_product.identifier == 'SLES'
+              raise InstanceVerification::Exception.new(
+                'This product is not available on a SLES PAYG instance'
+              )
+            end
+            return
+          end
 
           verification_provider = InstanceVerification.provider.new(
             logger,

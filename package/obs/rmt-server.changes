@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon May 18 14:41:43 UTC 2020 - Ivan Kapelyukhin <ikapelyukhin@suse.com>
+
+- Version 2.5.8
+- rmt-server-pubcloud: Forbid activation of non-free extensions
+    on SLES PAYG instances
+
+-------------------------------------------------------------------
 Fri Apr 17 03:25:20 UTC 2020 - Ivan Kapelyukhin <ikapelyukhin@suse.com>
 
 - Version 2.5.7
