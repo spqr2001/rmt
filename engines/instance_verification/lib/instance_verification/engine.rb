@@ -36,9 +36,9 @@ module InstanceVerification
           unless product.base?
             return if product.free?
             base_product = @system.products.where(product_type: :base).first
-            if base_product.identifier == 'SLES'
+            if base_product.identifier != 'SLES_SAP'
               raise InstanceVerification::Exception.new(
-                'This product is not available on a SLES PAYG instance'
+                'The product is not available for this image'
               )
             end
             return

@@ -104,7 +104,7 @@ describe Api::Connect::V3::Systems::ProductsController, type: :request do
     end
     let(:serialized_service_json) do
       V3::ServiceSerializer.new(
-          product.service,
+        product.service,
           base_url: URI::HTTP.build({ scheme: response.request.scheme, host: response.request.host }).to_s
       ).to_json
     end
@@ -126,7 +126,7 @@ describe Api::Connect::V3::Systems::ProductsController, type: :request do
 
         it 'reports an error' do
           data = JSON.parse(response.body)
-          expect(data['error']).to eq('Instance verification failed: This product is not available on a SLES PAYG instance')
+          expect(data['error']).to eq('Instance verification failed: The product is not available for this image')
         end
       end
 
@@ -143,13 +143,13 @@ describe Api::Connect::V3::Systems::ProductsController, type: :request do
       end
     end
 
-    context 'on a non-SLES system' do
-      let(:base_product) { FactoryGirl.create(:product, :with_mirrored_repositories, identifier: 'definitely-not-sles') }
+    context 'on a SLES_SAP system' do
+      let(:base_product) { FactoryGirl.create(:product, :with_mirrored_repositories, identifier: 'SLES_SAP') }
 
       context 'when the extension is not free' do
         let(:product) do
           FactoryGirl.create(
-              :product, :with_mirrored_repositories, :extension, free: false, base_products: [base_product]
+            :product, :with_mirrored_repositories, :extension, free: false, base_products: [base_product]
           )
         end
 
@@ -161,7 +161,7 @@ describe Api::Connect::V3::Systems::ProductsController, type: :request do
       context 'when the extension is free' do
         let(:product) do
           FactoryGirl.create(
-              :product, :with_mirrored_repositories, :extension, free: true, base_products: [base_product]
+            :product, :with_mirrored_repositories, :extension, free: true, base_products: [base_product]
           )
         end
 
