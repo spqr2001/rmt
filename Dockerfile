@@ -1,4 +1,5 @@
-FROM opensuse/amd64:42.3
+FROM opensuse/leap
+#FROM opensuse/amd64:42.3
 
 RUN zypper --non-interactive install --no-recommend timezone wget \
     gcc-c++ libffi-devel git-core zlib-devel libxml2-devel libxslt-devel cron libmariadb-devel \
