@@ -22,11 +22,9 @@ ENV RAILS_ENV production
 COPY . /srv/www/rmt/
 WORKDIR /srv/www/rmt/
 
-RUN ln -s /srv/www/rmt /var/lib/rmt
+#RUN ln -s /srv/www/rmt /var/lib/rmt
 RUN mkdir -p /srv/www/rmt/public/repo
 RUN mkdir -p /srv/www/rmt/public/suma
-RUN chown _rmt /srv/www/rmt/public/repo
-RUN chown _rmt /srv/www/rmt/public/suma
 
 RUN sed -i 's/#!\/usr\/bin\/env ruby/#!\/usr\/bin\/ruby.ruby2.5/g' /srv/www/rmt/bin/rmt-cli
 RUN ln -s /srv/www/rmt/bin/rmt-cli /usr/bin
@@ -36,6 +34,10 @@ RUN bundle
 RUN groupadd -r nginx
 RUN useradd -g nginx -s /bin/false -r -c "user for RMT" _rmt
 RUN chown _rmt /srv/www/rmt/public/repo 
+RUN chown _rmt /srv/www/rmt/public/suma
+RUN chwon _rmt  /srv/www/rmt/system_uuid
+
+RUN ln -s /srv/www/rmt /var/lib/rmt
 
 RUN printf "database: &database\n\
   host: <%%= ENV['MYSQL_HOST'] %%>\n\
