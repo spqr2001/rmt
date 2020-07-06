@@ -22,6 +22,12 @@ ENV RAILS_ENV production
 COPY . /srv/www/rmt/
 WORKDIR /srv/www/rmt/
 
+RUN ln -s /srv/www/rmt /var/lib/rmt
+RUN mkdir -p /srv/www/rmt/public/repo
+RUN mkdir -p /srv/www/rmt/public/suma
+RUN chown _rmt /srv/www/rmt/public/repo
+RUN chown _rmt /srv/www/rmt/public/suma
+
 RUN sed -i 's/#!\/usr\/bin\/env ruby/#!\/usr\/bin\/ruby.ruby2.5/g' /srv/www/rmt/bin/rmt-cli
 RUN ln -s /srv/www/rmt/bin/rmt-cli /usr/bin
 RUN bundle
