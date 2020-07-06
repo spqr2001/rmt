@@ -35,7 +35,7 @@ RUN groupadd -r nginx
 RUN useradd -g nginx -s /bin/false -r -c "user for RMT" _rmt
 RUN chown _rmt /srv/www/rmt/public/repo 
 RUN chown _rmt /srv/www/rmt/public/suma
-RUN chwon _rmt  /srv/www/rmt/system_uuid
+RUN chown _rmt  /srv/www/rmt/system_uuid
 
 RUN ln -s /srv/www/rmt /var/lib/rmt
 
